@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		716A67D02DB25B520042F151 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 716A67CF2DB25B520042F151 /* GoogleService-Info.plist */; };
-		716C7C282DD1DEBE0048D77D /* GoogleService-Info.plist.sample.plist in Resources */ = {isa = PBXBuildFile; fileRef = 716C7C272DD1DEBE0048D77D /* GoogleService-Info.plist.sample.plist */; };
 		71C714F42DB63907007487B1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 71C714F32DB63907007487B1 /* FirebaseAuth */; };
 		71C714F62DB63907007487B1 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 71C714F52DB63907007487B1 /* FirebaseCore */; };
 		71C714F82DB63907007487B1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 71C714F72DB63907007487B1 /* FirebaseFirestore */; };
@@ -17,21 +15,23 @@
 		71E208F22DB1F94D009CD4CD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 71E208F12DB1F94D009CD4CD /* .gitignore */; };
 		71E209242DB23447009CD4CD /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 71E209232DB23447009CD4CD /* GoogleSignIn */; };
 		71E209262DB23447009CD4CD /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 71E209252DB23447009CD4CD /* GoogleSignInSwift */; };
+		A9C5FEEF2DD233F300279412 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9C5FEEE2DD233F300279412 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		716A67CF2DB25B520042F151 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		716C7C272DD1DEBE0048D77D /* GoogleService-Info.plist.sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist.sample.plist"; sourceTree = "<group>"; };
 		71E208DA2DB1F203009CD4CD /* SaveMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaveMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71E208EF2DB1F925009CD4CD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		71E208F12DB1F94D009CD4CD /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		A9C5FEEE2DD233F300279412 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		71E209302DB23E7F009CD4CD /* Exceptions for "SaveMe" folder in "SaveMe" target */ = {
+		A9C5FEF42DD2376600279412 /* Exceptions for "SaveMe" folder in "SaveMe" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Info.plist.sample.plist,
 			);
 			target = 71E208D92DB1F203009CD4CD /* SaveMe */;
 		};
@@ -41,7 +41,7 @@
 		71E208DC2DB1F203009CD4CD /* SaveMe */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				71E209302DB23E7F009CD4CD /* Exceptions for "SaveMe" folder in "SaveMe" target */,
+				A9C5FEF42DD2376600279412 /* Exceptions for "SaveMe" folder in "SaveMe" target */,
 			);
 			path = SaveMe;
 			sourceTree = "<group>";
@@ -69,7 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				716C7C272DD1DEBE0048D77D /* GoogleService-Info.plist.sample.plist */,
-				716A67CF2DB25B520042F151 /* GoogleService-Info.plist */,
+				A9C5FEEE2DD233F300279412 /* GoogleService-Info.plist */,
 				71E208F12DB1F94D009CD4CD /* .gitignore */,
 				71E208EF2DB1F925009CD4CD /* README.md */,
 				71E208DC2DB1F203009CD4CD /* SaveMe */,
@@ -160,9 +160,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				71E208F02DB1F925009CD4CD /* README.md in Resources */,
-				716C7C282DD1DEBE0048D77D /* GoogleService-Info.plist.sample.plist in Resources */,
-				716A67D02DB25B520042F151 /* GoogleService-Info.plist in Resources */,
 				71E208F22DB1F94D009CD4CD /* .gitignore in Resources */,
+				A9C5FEEF2DD233F300279412 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

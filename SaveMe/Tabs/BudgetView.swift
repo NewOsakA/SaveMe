@@ -34,9 +34,9 @@ struct BudgetView: View {
                         HStack {
                             Text(budget.category)
                                 .font(.headline)
-                            
+
                             Spacer()
-                            
+
                             Button("Edit") {
                                 selectedBudget = budget
                                 updatedLimit = String(format: "%.2f", budget.limit)
@@ -44,7 +44,7 @@ struct BudgetView: View {
                             }
                             .foregroundColor(.blue)
                         }
-                        
+
                         Text("Limit: \(budget.limit, specifier: "%.2f")")
                             .font(.subheadline)
                             .foregroundColor(.gray)
@@ -62,6 +62,13 @@ struct BudgetView: View {
                     .background(Color(UIColor.systemGray6))
                     .cornerRadius(10)
                     .padding(.horizontal)
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            deleteBudget(budget)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
                 }
             }
             .onAppear {
@@ -85,4 +92,15 @@ struct BudgetView: View {
             }
         }
     }
+    
+    private func deleteBudget(_ budget: Budget) {
+        budgetService.deleteBudget(budget) { error in
+            if let error = error {
+                print("Error deleting budget: \(error.localizedDescription)")
+            } else {
+                budgets.removeAll { $0.id == budget.id }
+            }
+        }
+    }
+
 }
