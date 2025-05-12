@@ -1,17 +1,18 @@
-//
-//  SaveMeApp.swift
-//  SaveMe
-//
-//  Created by Achirawich Phongpanich on 18/4/2568 BE.
-//
-
 import SwiftUI
+import FirebaseCore
 
 @main
 struct SaveMeApp: App {
+    @StateObject private var authManager = AuthManager()
+
+    init() {
+        FirebaseApp.configure()
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AuthView()
+                .environmentObject(authManager)
         }
     }
 }

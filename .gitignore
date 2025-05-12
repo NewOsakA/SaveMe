@@ -2,10 +2,16 @@
 .DS_Store
 
 # Xcode
-build/
-*.xcworkspace
-*.xcuserdata
-DerivedData/
+*.xcuserdatad/
+*.xcuserdata/
+*.xcworkspace/
+*.xcodeproj/project.xcworkspace/
+*.xcdebugger/
 
 # Firebase
 GoogleService-Info.plist
+Info.plist
+
+# Build Files
+build/
+DerivedData/
