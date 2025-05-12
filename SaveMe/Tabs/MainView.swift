@@ -18,6 +18,11 @@ struct MainView: View {
                     Label("Budget", systemImage: "chart.pie.fill")
                 }
             
+            BillingView()
+                .tabItem {
+                    Label("Billing", systemImage: "creditcard.fill")
+                }
+            
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")

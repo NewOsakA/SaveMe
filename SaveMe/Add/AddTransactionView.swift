@@ -20,7 +20,7 @@ struct AddTransactionView: View {
         NavigationView {
             VStack(spacing: 20) {
                 HStack {
-                    Text("Add")
+                    Text("Add Transaction")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                 }
