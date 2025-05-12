@@ -1,6 +1,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
+import UserNotifications
 
 class BillingService: ObservableObject {
     private let db = Firestore.firestore()
@@ -69,4 +70,33 @@ class BillingService: ObservableObject {
                 completion(error)
             }
     }
+    
+    private func scheduleNotification(for billing: Billing) {
+            let content = UNMutableNotificationContent()
+            content.title = "Upcoming Billing Due"
+            content.body = "\(billing.name) is due soon!"
+            content.sound = .default
+
+            // Trigger 1 day before the due date
+            let triggerDate = Calendar.current.date(byAdding: .day, value: -1, to: billing.dueDate) ?? Date()
+//            let triggerDate = Date().addingTimeInterval(10)
+            let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: triggerDate)
+
+            let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+            let request = UNNotificationRequest(identifier: billing.id ?? UUID().uuidString, content: content, trigger: trigger)
+
+            UNUserNotificationCenter.current().add(request) { error in
+                if let error = error {
+                    print("Error scheduling notification: \(error.localizedDescription)")
+                } else {
+                    print("Notification scheduled for billing \(billing.name)")
+                }
+            }
+        }
+
+        private func scheduleNotifications(for billings: [Billing]) {
+            for billing in billings {
+                scheduleNotification(for: billing)
+            }
+        }
 }
