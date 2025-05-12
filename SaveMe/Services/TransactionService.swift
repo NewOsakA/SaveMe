@@ -3,6 +3,7 @@ import FirebaseAuth
 
 class TransactionService: ObservableObject {
     private let db = Firestore.firestore()
+    private let collection = "transactions"
 
     func addTransaction(_ transaction: Transaction, completion: @escaping (Error?) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else {
@@ -95,5 +96,35 @@ class TransactionService: ObservableObject {
             }
         }
     }
+    
+    func deleteTransaction(_ transaction: Transaction, completion: @escaping (Error?) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            print("User not authenticated.")
+            completion(NSError(domain: "", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"]))
+            return
+        }
+
+        guard let transactionId = transaction.id else {
+            print("Transaction ID is nil. Cannot delete transaction.")
+            completion(NSError(domain: "", code: 400, userInfo: [NSLocalizedDescriptionKey: "Transaction ID is nil"]))
+            return
+        }
+
+        db.collection("users")
+            .document(uid)
+            .collection("transactions")
+            .document(transactionId)
+            .delete { error in
+                if let error = error {
+                    print("Error deleting transaction: \(error.localizedDescription)")
+                    completion(error)
+                } else {
+                    print("Transaction deleted successfully")
+                    completion(nil)
+                }
+            }
+    }
+
+
 
 }
