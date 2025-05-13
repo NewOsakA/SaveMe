@@ -12,40 +12,75 @@ struct LoginView: View {
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                Text("SaveMe Login")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+            VStack(spacing: 30) {
+                // App Logo and Title
+                VStack(spacing: 8) {
+                    Image(systemName: "dollarsign.circle.fill")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .foregroundColor(.accentColor)
+                    
+                    Text("Welcome to SaveMe")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
+                    
+                    Text("Manage your finances effortlessly")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.top, 40)
 
-                TextField("Email", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(.none)
+                // Login Fields
+                VStack(spacing: 15) {
+                    TextField("Email", text: $email)
+                        .padding()
+                        .background(Color(UIColor.systemBackground))
+                        .cornerRadius(10)
+                        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+                        .autocapitalization(.none)
 
-                SecureField("Password", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    SecureField("Password", text: $password)
+                        .padding()
+                        .background(Color(UIColor.systemBackground))
+                        .cornerRadius(10)
+                        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+                    
+                    if !error.isEmpty {
+                        Text(error)
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                    }
 
-                if !error.isEmpty {
-                    Text(error)
-                        .foregroundColor(.red)
-                        .multilineTextAlignment(.center)
+                    Button(action: loginWithEmail) {
+                        Text("Login")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.accentColor)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .shadow(color: Color.accentColor.opacity(0.4), radius: 4, x: 0, y: 2)
+                    }
+
+                    GoogleSignInButton(action: handleGoogleSignIn)
+                        .frame(height: 50)
+                        .cornerRadius(10)
                         .padding(.horizontal)
                 }
 
-                Button("Login") {
-                    loginWithEmail()
+                // Register Link
+                NavigationLink(destination: RegisterView()) {
+                    Text("Don't have an account? Register")
+                        .foregroundColor(.accentColor)
+                        .underline()
                 }
-                .font(.headline)
-                .padding(.top)
-
-                Divider().padding(.vertical, 10)
-
-                GoogleSignInButton(action: handleGoogleSignIn)
-                    .frame(height: 44)
-
-                NavigationLink("Don't have an account? Register", destination: RegisterView())
-                    .padding(.top, 10)
+                .padding(.bottom, 40)
             }
-            .padding()
+            .padding(.horizontal, 30)
+            .frame(maxWidth: 500)
+            .background(Color(UIColor.systemGroupedBackground).ignoresSafeArea())
         }
     }
 
@@ -55,12 +90,11 @@ struct LoginView: View {
             if let err = err as NSError? {
                 print("❌ Email login failed:", err.localizedDescription)
                 
-
                 switch AuthErrorCode(rawValue: err.code) {
                 case .accountExistsWithDifferentCredential:
                     error = "This email is already registered using Google. Please sign in with Google."
                 case .wrongPassword:
-                    error = "Incorrect password. Please try again.           Or try sign in with Google."
+                    error = "Incorrect password. Please try again. Or try sign in with Google."
                 case .userNotFound:
                     error = "No account found with this email. Please register first."
                 case .userDisabled:
@@ -127,6 +161,6 @@ struct LoginView: View {
 //struct LoginView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        LoginView()
-//            .environmentObject(AuthManager()) // Provide a mock or real instance if needed
+//            .environmentObject(AuthManager())
 //    }
 //}
