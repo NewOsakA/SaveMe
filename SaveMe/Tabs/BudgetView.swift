@@ -9,78 +9,79 @@ struct BudgetView: View {
     @State private var updatedLimit = ""
 
     var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                HStack {
-                    Text("Budgets")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        showAddSheet = true
-                    }) {
-                        Image(systemName: "plus.circle.fill")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.blue)
-                    }
+        VStack {
+            HStack {
+                Text("Budgets")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+
+                Spacer()
+
+                Button(action: {
+                    showAddSheet = true
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .frame(width: 28, height: 28)
+                        .foregroundColor(.blue)
                 }
+            }
+            .padding(.horizontal)
+            .padding(.top, 16)
+
+            // Budget List
+            List(budgets) { budget in
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(budget.category)
+                            .font(.headline)
+
+                        Spacer()
+
+                        Button("Edit") {
+                            selectedBudget = budget
+                            updatedLimit = String(format: "%.2f", budget.limit)
+                            showEditSheet = true
+                        }
+                        .foregroundColor(.blue)
+                    }
+
+                    Text("Limit: \(budget.limit, specifier: "%.2f")")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+
+                    Text("Spent: \(budget.spent, specifier: "%.2f")")
+                        .font(.subheadline)
+                        .foregroundColor(budget.spent > budget.limit ? .red : .green)
+
+                    ProgressView(value: budget.limit > 0 ? min(max(budget.spent / budget.limit, 0), 1) : 0)
+                        .progressViewStyle(LinearProgressViewStyle())
+                        .padding(.vertical, 4)
+                        .accentColor(budget.spent > budget.limit ? .red : .blue)
+                }
+                .padding()
+                .background(Color(UIColor.systemGray6))
+                .cornerRadius(10)
                 .padding(.horizontal)
-
-                List(budgets) { budget in
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(budget.category)
-                                .font(.headline)
-
-                            Spacer()
-
-                            Button("Edit") {
-                                selectedBudget = budget
-                                updatedLimit = String(format: "%.2f", budget.limit)
-                                showEditSheet = true
-                            }
-                            .foregroundColor(.blue)
-                        }
-
-                        Text("Limit: \(budget.limit, specifier: "%.2f")")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-
-                        Text("Spent: \(budget.spent, specifier: "%.2f")")
-                            .font(.subheadline)
-                            .foregroundColor(budget.spent > budget.limit ? .red : .green)
-
-                        ProgressView(value: budget.limit > 0 ? min(max(budget.spent / budget.limit, 0), 1) : 0)
-                            .progressViewStyle(LinearProgressViewStyle())
-                            .padding(.vertical, 4)
-                            .accentColor(budget.spent > budget.limit ? .red : .blue)
-                    }
-                    .padding()
-                    .background(Color(UIColor.systemGray6))
-                    .cornerRadius(10)
-                    .padding(.horizontal)
-                    .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            deleteBudget(budget)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
+                .swipeActions(edge: .trailing) {
+                    Button(role: .destructive) {
+                        deleteBudget(budget)
+                    } label: {
+                        Label("Delete", systemImage: "trash")
                     }
                 }
             }
-            .onAppear {
-                loadBudgets()
-            }
-            .sheet(isPresented: $showAddSheet) {
-                AddBudgetView()
-            }
-            .sheet(isPresented: $showEditSheet) {
-                if let selectedBudget = selectedBudget {
-                    AddBudgetView(budgetToEdit: selectedBudget)
-                }
+            .listStyle(PlainListStyle())
+        }
+        .onAppear {
+            loadBudgets()
+        }
+        .sheet(isPresented: $showAddSheet) {
+            AddBudgetView()
+        }
+        .sheet(isPresented: $showEditSheet) {
+            if let selectedBudget = selectedBudget {
+                AddBudgetView(budgetToEdit: selectedBudget)
             }
         }
     }
